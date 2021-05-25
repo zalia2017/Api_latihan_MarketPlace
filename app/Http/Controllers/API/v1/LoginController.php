@@ -43,8 +43,15 @@ class LoginController extends Controller
         return response(['success' => true]);
     }
 
-    public function register()
+    public function register(Request $request)
     {
+        $user = new User;
+        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->password = Hash::make($request->password);
+        // $user->api_token = Str::random(60);
+        $user->save();
 
+        return response(['success' => true]);
     }
 }

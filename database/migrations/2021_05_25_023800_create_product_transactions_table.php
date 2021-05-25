@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductUserTable extends Migration
+class CreateProductTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateProductUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_user', function (Blueprint $table) {
-            $table->unsignedBigInteger('order_id');
+        Schema::create('product_transaction', function (Blueprint $table) {
+            $table->foreignId('transaction_id')->constrained();
             $table->foreignId('product_id')->constrained();
-            $table->foreignId('user_id')->constrained();
             $table->unsignedInteger('price');
-            $table->unsignedTinyInteger('quantity');
-            $table->dateTime('order_at');
-            $table->dateTime('checkout_at');
-            $table->enum('status', ['cart', 'checkout', 'end']);
+            $table->unsignedInteger('quantity');
+
+            $table->primary(['transaction_id', 'product_id']);
         });
     }
 
@@ -32,6 +30,6 @@ class CreateProductUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_user');
+        Schema::dropIfExists('product_transaction');
     }
 }

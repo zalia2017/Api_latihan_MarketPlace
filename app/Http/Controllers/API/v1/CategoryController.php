@@ -14,4 +14,12 @@ class CategoryController extends Controller
 
         return response(['data' => $categories]);
     }
+    public function store(Request $request)
+    {
+        $category =new Category;
+        $category->name = $request->name;
+        $category->save();
+
+        return response(['success'=>true],200);
+    }
 }

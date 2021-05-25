@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\API\v1\CartController;
 use App\Http\Controllers\API\v1\LoginController;
 use App\Http\Controllers\API\v1\UserController;
 use App\Http\Controllers\API\v1\CategoryController;
 use App\Http\Controllers\API\v1\OrderController;
 use App\Http\Controllers\API\v1\ProductController;
+use App\Http\Controllers\API\v1\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,11 +48,19 @@ Route::middleware('auth:api')->get('/v1/categories', [
     CategoryController::class,
     'index'
 ]);
+Route::middleware('auth:api')->post('/v1/category', [
+    CategoryController::class,
+    'store'
+]);
 
 //ProductController
 Route::middleware('auth:api')->get('/v1/products', [
     ProductController::class,
     'index'
+]);
+Route::middleware('auth:api')->post('/v1/product', [
+    ProductController::class,
+    'store'
 ]);
 Route::middleware('auth:api')->get('/v1/products/searchByKey', [
     ProductController::class,
@@ -63,6 +73,26 @@ Route::middleware('auth:api')->get('/v1/products/{product}', [
 Route::middleware('auth:api')->get('/v1/products/searchByCategory/{category}', [
     ProductController::class,
     'searchByCategory'
+]);
+
+//CartController
+Route::middleware('auth:api')->get('/v1/carts', [
+    CartController::class,
+    'index'
+]);
+Route::middleware('auth:api')->post('/v1/cart', [
+    CartController::class,
+    'store'
+]);
+Route::middleware('auth:api')->get('/v1/carts/showByUser', [
+    CartController::class,
+    'showByUser'
+]);
+
+//TransactionController
+Route::middleware('auth:api')->post('/v1/transaction', [
+    TransactionController::class,
+    'store'
 ]);
 
 //OrderController
